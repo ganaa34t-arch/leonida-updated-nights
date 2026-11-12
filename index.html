@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+<meta name="description" content="Vice City After Dark — a neon countdown to GTA VI, Christmas 2026, and New Year 2027, with a custom soundtrack player.">
+<title>VICE CITY AFTER DARK — 2027</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080b16;--bg2:#0d1122;--panel:rgba(18,23,43,.78);--panel2:rgba(24,31,55,.82);
+  --text:#f4f7ff;--muted:#929cb6;--line:rgba(180,195,255,.14);
+  --cyan:#61f4ff;--blue:#6b8cff;--violet:#a88bff;--pink:#ff5eae;--lime:#c7ff73;--gold:#ffc978;
+  --radius:24px;--shadow:0 24px 80px rgba(0,0,0,.36);--glass:rgba(12,18,36,.78);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#6b8cff #090d1b}
+body{margin:0;min-height:100vh;overflow-x:hidden;background:var(--bg);color:var(--text)}
+body,button,input{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,a,input{ -webkit-tap-highlight-color:transparent }
+button{color:inherit;cursor:pointer}
+a{color:inherit}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:#090d1b;border-left:1px solid rgba(255,255,255,.035)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#61f4ff 0%,#7186ff 52%,#b07cff 100%);border:3px solid #090d1b;border-radius:20px}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#b6fbff,#a6adff,#e0b7ff)}
+::selection{background:rgba(97,244,255,.28);color:white}
+#app{position:relative;isolation:isolate;min-height:100vh;overflow:hidden;background:radial-gradient(ellipse at 5% 0%,rgba(62,104,255,.17),transparent 32%),radial-gradient(ellipse at 92% 12%,rgba(255,77,174,.12),transparent 29%),linear-gradient(145deg,#080b16,#0c1020 48%,#080b16)}
+#app:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.38;background-image:linear-gradient(rgba(142,164,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(142,164,255,.045) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.aurora{position:fixed;z-index:-1;width:46vw;height:46vw;max-width:720px;max-height:720px;border-radius:50%;filter:blur(90px);opacity:.15;pointer-events:none;animation:drift 22s ease-in-out infinite alternate}
+.aurora.a{top:-20vw;left:-15vw;background:#416cff}.aurora.b{top:30vh;right:-24vw;background:#e14bba;animation-delay:-8s}.aurora.c{bottom:-35vw;left:27vw;background:#39dcea;animation-delay:-14s}
+@keyframes drift{from{transform:translate3d(-2%,0,0) scale(.92)}to{transform:translate3d(5%,7%,0) scale(1.12)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes pulseDot{0%,100%{opacity:.55;box-shadow:0 0 0 0 rgba(97,244,255,.35)}50%{opacity:1;box-shadow:0 0 0 7px rgba(97,244,255,0)}}
+@keyframes numberFlip{from{opacity:.35;transform:translateY(5px);filter:blur(2px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes equalize{0%,100%{height:5px}50%{height:17px}}
+@keyframes scan{0%{transform:translateY(-120%)}100%{transform:translateY(130vh)}}
+@keyframes borderGlow{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+body:after{content:"";position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.10;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.08) 4px);mix-blend-mode:soft-light}
+#app:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(97,244,255,.07),transparent 48%)}
+.top-shell{position:sticky;top:0;z-index:30;border-bottom:1px solid rgba(177,195,255,.1);background:rgba(8,11,22,.76);backdrop-filter:blur(22px) saturate(150%)}
+.topbar{width:min(1240px,100%);margin:auto;padding:15px 28px;display:flex;align-items:center;gap:22px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;min-width:max-content}
+.brand-mark{width:38px;height:38px;border:1px solid rgba(97,244,255,.35);border-radius:13px;display:grid;place-items:center;color:#07121b;background:linear-gradient(135deg,var(--cyan),#8d91ff 58%,var(--pink));box-shadow:0 0 27px rgba(97,244,255,.18);font-size:18px;font-weight:1000}
+.brand-name{font-size:11px;font-weight:950;letter-spacing:.16em;line-height:1.35;text-transform:uppercase}
+.brand-name span{display:block;color:var(--cyan);font-size:9px;letter-spacing:.25em}
+.main-nav{display:flex;align-items:center;gap:4px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.nav-button{border:1px solid transparent;border-radius:999px;padding:9px 11px;background:transparent;color:#aeb8d2;font-size:9px;letter-spacing:.15em;font-weight:900;transition:.22s}
+.nav-button:hover,.nav-button.active{color:white;border-color:rgba(97,244,255,.23);background:rgba(97,244,255,.075)}
+.nav-button.active{box-shadow:inset 0 0 18px rgba(97,244,255,.04),0 0 22px rgba(97,244,255,.05)}
+.live-chip{display:flex;align-items:center;gap:8px;margin-left:8px;color:#c3cee6;font-size:8px;letter-spacing:.15em;font-weight:900;white-space:nowrap}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:pulseDot 1.9s infinite}
+.mobile-toggle{display:none;margin-left:auto;width:40px;height:40px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.045);font-size:18px}
+.mobile-menu{display:none;position:absolute;top:calc(100% + 8px);left:15px;right:15px;padding:9px;border:1px solid var(--line);border-radius:18px;background:rgba(11,15,30,.97);box-shadow:var(--shadow)}
+.mobile-menu.open{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.mobile-menu button{padding:13px;border:1px solid transparent;border-radius:12px;background:rgba(255,255,255,.04);color:#dce5ff;text-align:left;font-size:10px;font-weight:900;letter-spacing:.1em}
+.page{width:min(1240px,100%);margin:0 auto;padding:0 28px 60px;animation:fadeUp .42s ease both}
+.page[hidden]{display:none}
+.page{animation:fadeUp .5s cubic-bezier(.2,.75,.2,1) both}
+.glass-card,.count-card,.track-card,.sponsor-card,.feature-card{backdrop-filter:blur(14px)}
+.nav-button{white-space:nowrap}
+.nav-button:focus-visible,.btn:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.hero{position:relative;padding:75px 12px 48px;text-align:center}
+.hero-orbit{position:absolute;width:290px;height:290px;left:50%;top:45px;transform:translateX(-50%);border:1px solid rgba(97,244,255,.13);border-radius:50%;pointer-events:none;box-shadow:0 0 80px rgba(97,244,255,.035),inset 0 0 70px rgba(168,139,255,.04)}
+.hero-orbit:before,.hero-orbit:after{content:"";position:absolute;border:1px solid rgba(168,139,255,.14);border-radius:50%;inset:22px;transform:rotate(28deg) scaleX(1.25)}
+.hero-orbit:after{inset:48px;border-color:rgba(255,94,174,.12);transform:rotate(-35deg) scaleX(1.35)}
+.eyebrow{position:relative;display:inline-flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid rgba(97,244,255,.2);border-radius:999px;background:rgba(97,244,255,.055);color:#a6f7ff;font-size:8px;font-weight:950;letter-spacing:.23em;text-transform:uppercase}
+.eyebrow:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 13px var(--cyan)}
+.hero h1{position:relative;margin:24px 0 0;font-size:clamp(44px,8.2vw,104px);line-height:.88;letter-spacing:-.085em;font-weight:1000;text-transform:uppercase}
+.hero h1 .gradient{display:block;margin-top:11px;background:linear-gradient(100deg,#fff 0%,#a7faff 22%,#9b9fff 52%,#ff82c3 77%,#fff 100%);background-size:200% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:shimmer 10s linear infinite}
+.hero-copy{max-width:610px;margin:25px auto 0;color:#9ba8c4;font-size:13px;line-height:1.8}
+.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 17px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.045);color:#eaf0ff;text-decoration:none;font-size:9px;letter-spacing:.12em;font-weight:950;transition:.22s}
+.btn:hover{transform:translateY(-2px);border-color:rgba(97,244,255,.4);box-shadow:0 9px 28px rgba(0,0,0,.2)}
+.btn.primary{border-color:transparent;background:linear-gradient(100deg,#6af1ff,#9c91ff 55%,#ff7abd);color:#07101d;box-shadow:0 9px 32px rgba(101,180,255,.17)}
+.section{padding:27px 0 34px;scroll-margin-top:90px}
+.section-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:17px}
+.kicker{color:var(--cyan);font-size:8px;font-weight:950;letter-spacing:.26em;text-transform:uppercase}
+h2{margin:7px 0 0;font-size:clamp(22px,3.7vw,34px);letter-spacing:-.055em}
+.subtext{margin:7px 0 0;color:var(--muted);font-size:11px;line-height:1.65}
+.clock{color:#9eabc7;font-size:9px;font-variant-numeric:tabular-nums;letter-spacing:.12em;text-align:right}
+.count-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.count-card{--accent:var(--cyan);--glow:rgba(97,244,255,.18);position:relative;isolation:isolate;min-height:248px;padding:21px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:linear-gradient(145deg,rgba(29,39,68,.78),rgba(13,18,35,.76));box-shadow:0 16px 50px rgba(0,0,0,.18);transition:transform .3s,border-color .3s,box-shadow .3s}
+.count-card:before{content:"";position:absolute;z-index:-1;width:210px;height:210px;right:-105px;top:-125px;border-radius:50%;background:var(--glow);filter:blur(12px)}
+.count-card:hover{transform:translateY(-5px);border-color:rgba(190,220,255,.3);box-shadow:0 22px 65px rgba(0,0,0,.26)}
+.count-card.gta{--accent:#ff82be;--glow:rgba(255,94,174,.28)}.count-card.xmas{--accent:#a9ffb5;--glow:rgba(80,255,160,.2)}.count-card.newyear{--accent:#c2a6ff;--glow:rgba(145,105,255,.26)}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-icon{font-size:24px}.card-tag{padding:6px 9px;border:1px solid color-mix(in srgb,var(--accent),transparent 65%);border-radius:999px;color:var(--accent);font-size:7px;font-weight:950;letter-spacing:.16em;text-transform:uppercase}
+.count-card h3{margin:17px 0 5px;font-size:17px;letter-spacing:-.035em}.date{color:#8795b4;font-size:9px}
+.timer{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:20px}
+.time-unit{padding:11px 3px 9px;border:1px solid rgba(200,215,255,.07);border-radius:12px;background:rgba(3,7,18,.38);text-align:center;min-width:0}
+.time-value{display:block;color:var(--accent);font-size:clamp(18px,2.4vw,27px);font-variant-numeric:tabular-nums;font-weight:950;letter-spacing:-.07em;white-space:nowrap}
+.time-value.changed{animation:numberFlip .24s ease both}
+.time-label{display:block;margin-top:3px;color:#8290ac;font-size:7px;letter-spacing:.13em;font-weight:900}
+.count-status{margin-top:12px;min-height:27px;color:#96a5c2;font-size:9px;line-height:1.55}
+.progress{height:3px;margin-top:9px;border-radius:99px;background:rgba(255,255,255,.075);overflow:hidden}.progress>span{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),white);transition:width 1s linear}
+.home-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;margin-top:14px}
+.glass-card{border:1px solid var(--line);border-radius:var(--radius);padding:21px;background:var(--panel);box-shadow:0 14px 45px rgba(0,0,0,.16);backdrop-filter:blur(16px)}
+.glass-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}.glass-title h3{margin:0;font-size:14px;letter-spacing:-.02em}
+.pill{padding:6px 9px;border:1px solid rgba(97,244,255,.19);border-radius:999px;background:rgba(97,244,255,.055);color:#9af4ff;font-size:7px;letter-spacing:.14em;font-weight:950;white-space:nowrap}
+.update-list{display:grid;gap:9px}.update{padding:13px 14px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:rgba(255,255,255,.025)}.update small{color:#a7b5d1;font-size:8px;font-weight:900;letter-spacing:.13em}.update h4{margin:6px 0 5px;font-size:12px}.update p{margin:0;color:#96a3bf;font-size:10px;line-height:1.65}.update a{display:inline-block;margin-top:8px;color:var(--cyan);font-size:8px;font-weight:950;letter-spacing:.12em;text-decoration:none}
+.info-lines{display:grid;gap:10px}.info-line{display:flex;align-items:center;gap:11px;padding:12px;border-radius:14px;background:rgba(255,255,255,.03)}.info-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(168,139,255,.11);color:#cfbdff;font-size:16px}.info-line strong{display:block;font-size:10px}.info-line span{display:block;margin-top:3px;color:#8f9cb8;font-size:9px}
+.footer{padding:31px 15px 54px;text-align:center;color:#697693;font-size:8px;line-height:1.9;letter-spacing:.07em}.footer strong{color:#b8c7e7;letter-spacing:.19em}
+/* Soundtrack view */
+.soundtrack-hero{position:relative;margin:28px 0 18px;padding:31px;border:1px solid rgba(97,244,255,.17);border-radius:28px;overflow:hidden;background:radial-gradient(ellipse at 90% 15%,rgba(97,244,255,.14),transparent 35%),radial-gradient(ellipse at 8% 100%,rgba(168,139,255,.16),transparent 40%),linear-gradient(125deg,rgba(22,32,57,.92),rgba(12,18,34,.88));box-shadow:var(--shadow)}
+.soundtrack-hero:after{content:"♫";position:absolute;right:6%;top:50%;transform:translateY(-50%) rotate(-9deg);font-size:clamp(100px,19vw,220px);font-weight:1000;color:rgba(97,244,255,.055);pointer-events:none}
+.soundtrack-hero h1{position:relative;z-index:1;margin:9px 0 8px;font-size:clamp(32px,5vw,58px);letter-spacing:-.075em}.soundtrack-hero p{position:relative;z-index:1;max-width:610px;margin:0;color:#a1b0cc;font-size:11px;line-height:1.75}
+.track-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:19px 0 13px}.toolbar-label{color:#91a0bd;font-size:8px;font-weight:950;letter-spacing:.18em}.toolbar-count{color:var(--cyan);font-size:8px;font-weight:950;letter-spacing:.16em}
+.track-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.track-card{position:relative;min-width:0;min-height:156px;padding:14px;border:1px solid rgba(178,195,255,.12);border-radius:18px;overflow:hidden;background:linear-gradient(145deg,rgba(26,34,59,.85),rgba(13,18,34,.88));transition:transform .24s,border-color .24s,background .24s;display:flex;flex-direction:column;justify-content:space-between}
+.track-card:before{content:"";position:absolute;width:125px;height:125px;right:-65px;top:-70px;border-radius:50%;background:var(--card-glow,rgba(97,244,255,.12));filter:blur(7px);pointer-events:none}
+.track-card:hover{transform:translateY(-4px);border-color:rgba(97,244,255,.38);background:linear-gradient(145deg,rgba(29,47,72,.9),rgba(13,18,34,.94))}
+.track-card.active{border-color:rgba(97,244,255,.55);box-shadow:inset 0 0 0 1px rgba(97,244,255,.08),0 0 25px rgba(97,244,255,.08)}
+.track-card.soon{border-style:dashed;border-color:rgba(97,244,255,.2);background:linear-gradient(145deg,rgba(21,43,57,.62),rgba(12,18,34,.85))}
+.track-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px}.track-number{color:#7383a5;font-size:8px;letter-spacing:.16em;font-weight:950}.track-badge{padding:4px 6px;border:1px solid rgba(97,244,255,.24);border-radius:999px;color:var(--cyan);background:rgba(97,244,255,.07);font-size:6px;font-weight:1000;letter-spacing:.1em}.track-badge.new{color:#b8a6ff;border-color:rgba(168,139,255,.3);background:rgba(168,139,255,.09)}
+.track-main{position:relative;z-index:1;min-width:0;margin:13px 0 11px}.track-title{margin:0;color:#f4f6ff;font-size:clamp(11px,1.1vw,13px);font-weight:900;line-height:1.35;overflow-wrap:anywhere}.track-artist{margin:5px 0 0;color:#8998b6;font-size:9px;line-height:1.45;overflow-wrap:anywhere}.track-bottom{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px}.track-file{color:#647390;font-size:7px;letter-spacing:.08em}.track-play{width:30px;height:30px;flex:0 0 30px;border:1px solid rgba(97,244,255,.28);border-radius:50%;background:rgba(97,244,255,.1);color:var(--cyan);font-weight:950;transition:.2s}.track-play:hover{background:var(--cyan);color:#07101b}.track-play:disabled{cursor:not-allowed;border-color:rgba(97,244,255,.16);background:rgba(97,244,255,.045);color:#6fbed0}
+.player-card{position:sticky;bottom:12px;z-index:15;display:grid;grid-template-columns:minmax(180px,1fr) auto minmax(160px,.8fr);align-items:center;gap:18px;margin-top:18px;padding:15px 17px;border:1px solid rgba(97,244,255,.2);border-radius:20px;background:rgba(9,15,29,.9);backdrop-filter:blur(24px) saturate(150%);box-shadow:0 15px 60px rgba(0,0,0,.38)}
+.player-now{display:flex;align-items:center;gap:11px;min-width:0}.player-art{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border:1px solid rgba(97,244,255,.25);border-radius:13px;background:linear-gradient(135deg,rgba(97,244,255,.22),rgba(168,139,255,.24),rgba(255,94,174,.18));font-size:19px}.player-copy{min-width:0}.player-copy strong{display:block;overflow:hidden;color:#f1f5ff;font-size:10px;text-overflow:ellipsis;white-space:nowrap}.player-copy span{display:block;overflow:hidden;margin-top:4px;color:#8796b2;font-size:8px;text-overflow:ellipsis;white-space:nowrap}
+.player-buttons{display:flex;align-items:center;justify-content:center;gap:9px}.control{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.04);color:#dce5ff}.control.main{width:42px;height:42px;border:0;background:linear-gradient(135deg,var(--cyan),#a99aff);color:#07101b;font-size:15px;font-weight:1000;box-shadow:0 6px 19px rgba(97,244,255,.14)}
+.progress-area{display:grid;grid-template-columns:32px minmax(60px,1fr) 32px;align-items:center;gap:7px;color:#8290ad;font-size:7px;font-variant-numeric:tabular-nums}.progress-area input{width:100%;accent-color:var(--cyan)}
+.player-error{min-height:14px;margin-top:8px;color:#ff9ebd;font-size:8px;text-align:right}
+.music-note{margin:12px 2px 0;color:#73819d;font-size:8px;line-height:1.6}
+
+/* 2027 FUTURE SYSTEM */
+.extra-hero{position:relative;margin:28px 0 22px;padding:clamp(25px,5vw,48px);border:1px solid rgba(97,244,255,.2);border-radius:30px;overflow:hidden;background:radial-gradient(circle at 85% 20%,rgba(255,94,174,.17),transparent 27%),radial-gradient(circle at 8% 100%,rgba(97,244,255,.16),transparent 35%),linear-gradient(130deg,rgba(20,31,57,.95),rgba(9,14,29,.94));box-shadow:var(--shadow)}
+.extra-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.055) 48%,transparent 70%);transform:translateX(-100%);animation:shimmer 9s linear infinite;pointer-events:none}
+.extra-hero h1{position:relative;margin:12px 0 10px;font-size:clamp(34px,6vw,68px);line-height:.95;letter-spacing:-.075em}.extra-hero p{position:relative;max-width:670px;color:#a3b1cc;font-size:12px;line-height:1.8;margin:0}
+.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:18px 0}.feature-card{position:relative;min-height:170px;padding:20px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(145deg,rgba(24,35,62,.86),rgba(11,17,33,.9));overflow:hidden;transition:.3s}.feature-card:hover,.sponsor-card:hover{transform:translateY(-5px);border-color:rgba(97,244,255,.42);box-shadow:0 18px 48px rgba(0,0,0,.24)}.feature-icon{font-size:25px}.feature-card h3{margin:14px 0 7px;font-size:15px}.feature-card p{margin:0;color:#94a2bf;font-size:10px;line-height:1.7}
+.sponsor-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:20px 0}.sponsor-card{position:relative;min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:17px 10px;border:1px solid rgba(180,195,255,.14);border-radius:20px;background:linear-gradient(145deg,rgba(24,34,59,.9),rgba(10,16,31,.92));text-align:center;transition:.3s;overflow:hidden}.sponsor-logo{width:48px;height:48px;display:grid;place-items:center;border:1px solid rgba(97,244,255,.2);border-radius:16px;background:linear-gradient(135deg,rgba(97,244,255,.13),rgba(168,139,255,.16));color:#e9faff;font-size:19px;font-weight:1000;letter-spacing:-.07em;box-shadow:0 0 28px rgba(97,244,255,.08)}.sponsor-card strong{font-size:10px;letter-spacing:.04em}.sponsor-card span:last-child{color:#7786a4;font-size:7px;letter-spacing:.16em;text-transform:uppercase}
+.sponsor-note{padding:14px 16px;border:1px solid rgba(255,201,120,.18);border-radius:15px;background:rgba(255,201,120,.045);color:#aeb9d0;font-size:9px;line-height:1.7}
+.gallery-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:13px}.gallery-tile{min-height:190px;position:relative;display:flex;align-items:end;padding:20px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:radial-gradient(circle at 70% 25%,rgba(255,94,174,.25),transparent 35%),linear-gradient(145deg,#17284b,#0b1121 70%)}.gallery-tile:nth-child(2){background:radial-gradient(circle at 25% 25%,rgba(97,244,255,.28),transparent 38%),linear-gradient(145deg,#142c3c,#0b1121 70%)}.gallery-tile:nth-child(3){background:radial-gradient(circle at 80% 30%,rgba(168,139,255,.3),transparent 38%),linear-gradient(145deg,#27204a,#0b1121 70%)}.gallery-tile:before{content:"";position:absolute;width:190px;height:190px;right:-40px;top:-65px;border:1px solid rgba(255,255,255,.16);border-radius:50%;box-shadow:0 0 0 22px rgba(255,255,255,.025),0 0 0 46px rgba(255,255,255,.02)}.gallery-tile strong{position:relative;font-size:16px;letter-spacing:-.04em}.gallery-tile small{display:block;margin-top:5px;color:#a2b0ca;font-size:8px;letter-spacing:.14em}
+.sponsor-head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.sponsor-count{color:var(--cyan);font-size:9px;font-weight:950;letter-spacing:.18em}
+@media(max-width:1050px){.topbar{gap:8px}.nav-button{padding:8px 9px;font-size:8px}.sponsor-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:760px){.main-nav{display:none}.feature-grid{grid-template-columns:1fr 1fr}.sponsor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-grid{grid-template-columns:1fr 1fr}.gallery-tile:first-child{grid-column:1/-1}.mobile-menu.open{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:440px){.feature-grid,.gallery-grid{grid-template-columns:1fr}.gallery-tile:first-child{grid-column:auto}.sponsor-card{min-height:118px}}
+@media(prefers-reduced-motion:reduce){.extra-hero:before{animation:none}}
+
+@media(max-width:980px){.track-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.topbar{gap:12px}.live-chip{display:none}}
+@media(max-width:760px){.topbar{padding:12px 17px}.main-nav{display:none}.mobile-toggle{display:block}.page{padding:0 17px 45px}.hero{padding:62px 3px 34px}.count-grid{grid-template-columns:1fr 1fr}.count-card{padding:16px;min-height:238px}.home-grid{grid-template-columns:1fr}.track-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.player-card{grid-template-columns:1fr auto;gap:10px}.progress-area{grid-column:1/-1}.soundtrack-hero{padding:24px}}
+@media(max-width:440px){.count-grid{grid-template-columns:1fr}.count-card{min-height:220px}.timer{gap:5px}.time-unit{padding:10px 2px 8px}.track-card{min-height:147px;padding:11px}.track-title{font-size:11px}.player-card{bottom:7px;padding:12px}.player-art{width:38px;height:38px;flex-basis:38px}.player-buttons{gap:5px}.control{width:30px;height:30px}.control.main{width:38px;height:38px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="aurora a"></div><div class="aurora b"></div><div class="aurora c"></div>
+  <div class="top-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" data-view-link="home" aria-label="Vice City After Dark home"><span class="brand-mark">✦</span><span class="brand-name">VICE CITY <span>AFTER DARK / 2027</span></span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-button active" type="button" data-view-link="home">HOME</button>
+        <button class="nav-button" type="button" data-view-link="soundtrack">SOUNDTRACK</button>
+        <button class="nav-button" type="button" data-view-link="explore">EXPLORE</button>
+        <button class="nav-button" type="button" data-view-link="news">NEWS</button>
+        <button class="nav-button" type="button" data-view-link="gallery">GALLERY</button>
+        <button class="nav-button" type="button" data-view-link="sponsors">SPONSORS</button>
+        <button class="nav-button" type="button" data-view-link="about">ABOUT</button>
+      </nav>
+      <div class="live-chip"><span class="live-dot"></span> LIVE COUNTDOWNS</div>
+      <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+      <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <button type="button" data-view-link="home">⌂ &nbsp; HOME</button>
+        <button type="button" data-view-link="soundtrack">♫ &nbsp; SOUNDTRACK</button>
+        <button type="button" data-view-link="explore">✦ &nbsp; EXPLORE</button>
+        <button type="button" data-view-link="news">▤ &nbsp; NEWS</button>
+        <button type="button" data-view-link="gallery">▧ &nbsp; GALLERY</button>
+        <button type="button" data-view-link="sponsors">◇ &nbsp; SPONSORS</button>
+        <button type="button" data-view-link="about">ⓘ &nbsp; ABOUT</button>
+      </nav>
+    </header>
+  </div>
+
+  <main id="homeView" class="page">
+    <section class="hero">
+      <div class="hero-orbit"></div>
+      <div class="eyebrow">THE NEXT ERA STARTS HERE · 2027 EDITION</div>
+      <h1>VICE CITY <span class="gradient">AFTER DARK</span></h1>
+      <p class="hero-copy">A neon-lit countdown to Leonida, the holiday season, and a brand-new year. Tune in, lock the dates, and stay after dark.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#countdowns">◷ &nbsp; EXPLORE COUNTDOWNS</a>
+        <button class="btn" type="button" data-view-link="soundtrack">♫ &nbsp; ENTER THE SOUNDTRACK</button>
+      </div>
+    </section>
+
+    <section class="section" id="countdowns">
+      <div class="section-heading"><div><div class="kicker">Three dates on the radar</div><h2>Count every second.</h2><p class="subtext">All countdowns use your device's local time.</p></div><div class="clock" id="localClock">LOCAL TIME · --:--:--</div></div>
+      <div class="count-grid">
+        <article class="count-card gta" data-count-card="gta">
+          <div class="card-top"><span class="card-icon">🌴</span><span class="card-tag">THE BIG ONE</span></div>
+          <h3>Grand Theft Auto VI</h3><div class="date">November 19, 2026 · Launch day</div>
+          <div class="timer" id="timer-gta" aria-live="off"></div><div class="count-status" id="status-gta">Welcome back to Vice City.</div><div class="progress"><span id="progress-gta"></span></div>
+        </article>
+        <article class="count-card xmas" data-count-card="christmas">
+          <div class="card-top"><span class="card-icon">✦</span><span class="card-tag">HOLIDAY MODE</span></div>
+          <h3>Christmas Day</h3><div class="date">December 25, 2026 · 00:00 local time</div>
+          <div class="timer" id="timer-christmas" aria-live="off"></div><div class="count-status" id="status-christmas">The lights are coming on.</div><div class="progress"><span id="progress-christmas"></span></div>
+        </article>
+        <article class="count-card newyear" data-count-card="newyear">
+          <div class="card-top"><span class="card-icon">✧</span><span class="card-tag">NEXT CHAPTER</span></div>
+          <h3>New Year 2027</h3><div class="date">January 1, 2027 · 00:00 local time</div>
+          <div class="timer" id="timer-newyear" aria-live="off"></div><div class="count-status" id="status-newyear">A new year. A new frequency.</div><div class="progress"><span id="progress-newyear"></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading"><div><div class="kicker">The signal</div><h2>Stay in the loop.</h2></div><a class="btn" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener">OFFICIAL GTA VI SITE ↗</a></div>
+      <div class="home-grid">
+        <article class="glass-card">
+          <div class="glass-title"><h3>Rockstar latest</h3><span class="pill">OFFICIAL SOURCE</span></div>
+          <div class="update-list">
+            <div class="update"><small>NOVEMBER 10, 2026 · GTA VI</small><h4>Pre-Load Grand Theft Auto VI Now</h4><p>Digital pre-loading is now available for players who have pre-ordered GTA VI.</p><a href="https://www.rockstargames.com/newswire/article/89834o94713o21/pre-load-grand-theft-auto-vi-now" target="_blank" rel="noopener">READ ROCKSTAR NEWSWIRE ↗</a></div>
+            <div class="update"><small>NOVEMBER 5, 2026 · GTA VI</small><h4>Explore the Grand Theft Auto VI Launch Gallery</h4><p>Official screenshots and locations from the world of Leonida.</p><a href="https://www.rockstargames.com/VI" target="_blank" rel="noopener">OPEN GTA VI ↗</a></div>
+          </div>
+        </article>
+        <article class="glass-card">
+          <div class="glass-title"><h3>Quick access</h3><span class="pill">VICE CITY FM</span></div>
+          <div class="info-lines">
+            <div class="info-line"><div class="info-icon">♫</div><div><strong>Soundtrack library</strong><span>Explore all 20 soundtrack slots and play available MP3s.</span></div></div>
+            <div class="info-line"><div class="info-icon">▦</div><div><strong>Freshly revealed tracks</strong><span>Tracks 16–20 have now been added to the soundtrack.</span></div></div>
+            <div class="info-line"><div class="info-icon">⌁</div><div><strong>Built for every screen</strong><span>Responsive layout for phone, tablet, and desktop.</span></div></div>
+          </div>
+          <div style="margin-top:15px"><button class="btn primary" type="button" data-view-link="soundtrack">OPEN SOUNDTRACK ↗</button></div>
+        </article>
+      </div>
+    </section>
+    <footer class="footer"><strong>VICE CITY AFTER DARK / 2027</strong><br>Fan-made countdown and music player. Not affiliated with or endorsed by Rockstar Games.<br>GTA VI date references Rockstar's official site. All countdowns use your device's local timezone.</footer>
+  </main>
+
+  <main id="soundtrackView" class="page" hidden>
+    <section class="soundtrack-hero">
+      <div class="kicker">VICE CITY FM · CURATED FREQUENCIES</div>
+      <h1>THE SOUNDTRACK.</h1>
+      <p>Twenty slots. One frequency. All 20 tracks are ready to play. Tune in and let Vice City take over.</p>
+    </section>
+    <div class="section-heading"><div><div class="kicker">Track library</div><h2>Choose your frequency.</h2><p class="subtext">Select any available track to play it instantly.</p></div><div class="clock">OFFICIAL SOUNDTRACK</div></div>
+    <div class="track-toolbar"><span class="toolbar-label">FULL TRACK GRID</span><span class="toolbar-count">20 PLAYABLE · 0 UPCOMING</span></div>
+    <section class="track-grid" id="trackGrid" aria-label="Soundtrack tracks"></section>
+    <div class="player-card" aria-label="Official track player">
+      <div class="player-now"><div class="player-art">♫</div><div class="player-copy"><strong id="nowTitle">Shut up My Moms Calling</strong><span id="nowArtist">Hotel Ugly</span></div></div>
+      <div class="player-buttons"><button class="control" id="prevTrack" type="button" aria-label="Previous track">Ⅱ◀</button><button class="control main" id="playPause" type="button" aria-label="Play">▶</button><button class="control" id="nextTrack" type="button" aria-label="Next track">▶Ⅱ</button></div>
+      <div><div class="progress-area"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0" aria-label="Seek through track"><span id="duration">0:00</span></div><div class="player-error" id="playerError" role="status">OFFICIAL TRACK PLAYER</div></div>
+    </div>
+    <audio id="audio" preload="metadata"></audio>
+    <p class="music-note">Audio files must be placed in the same folder as <strong>index.html</strong>. For Tracks 16–20, place <strong>Track16.mp3</strong>, <strong>Track17.mp3</strong>, <strong>Track18.mp3</strong>, <strong>Track19.mp3</strong>, and <strong>Track20.mp3</strong> beside index.html.</p>
+    <footer class="footer"><strong>VICE CITY AFTER DARK / 2027</strong><br>Fan-made soundtrack interface. Artist credits are shown where supplied or identifiable; unconfirmed credits are marked Artist TBA.</footer>
+  </main>
+
+  <main id="exploreView" class="page" hidden>
+    <section class="extra-hero"><div class="kicker">LEONIDA / FIELD GUIDE</div><h1>EXPLORE THE CITY.</h1><p>A digital nightlife dashboard for the Vice City era. Jump into the soundtrack, follow official updates, and keep the next big dates in view.</p></section>
+    <div class="feature-grid">
+      <article class="feature-card"><div class="feature-icon">🌴</div><h3>Vice City Nights</h3><p>Neon streets, palm-lined horizons, and a city that never really powers down.</p></article>
+      <article class="feature-card"><div class="feature-icon">📡</div><h3>Live Signal</h3><p>Keep your eyes on official Rockstar channels for confirmed game announcements.</p></article>
+      <article class="feature-card"><div class="feature-icon">♫</div><h3>Vice City FM</h3><p>Open the soundtrack library and play your local MP3 collection in the built-in player.</p><button class="btn" data-view-link="soundtrack" type="button" style="margin-top:12px">OPEN RADIO ↗</button></article>
+    </div>
+    <div class="glass-card"><div class="glass-title"><h3>Mission control</h3><span class="pill">QUICK LAUNCH</span></div><div class="hero-actions" style="justify-content:flex-start;margin-top:0"><button class="btn primary" data-view-link="soundtrack" type="button">♫ SOUNDTRACK</button><button class="btn" data-view-link="news" type="button">▤ NEWSROOM</button><button class="btn" data-view-link="sponsors" type="button">◇ SPONSORS</button></div></div>
+    <footer class="footer"><strong>VICE CITY AFTER DARK / 2027</strong><br>Fan-made digital experience.</footer>
+  </main>
+
+  <main id="newsView" class="page" hidden>
+    <section class="extra-hero"><div class="kicker">TRANSMISSION / NEWSROOM</div><h1>THE LATEST SIGNAL.</h1><p>A clean launchpad to official announcements and the links already featured on this site. Always verify dates and details with the original publisher.</p></section>
+    <div class="feature-grid">
+      <article class="feature-card"><div class="feature-icon">🚀</div><h3>Grand Theft Auto VI</h3><p>Visit the official GTA VI destination for the latest game information.</p><a class="btn" style="margin-top:14px" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener">OFFICIAL GTA VI ↗</a></article>
+      <article class="feature-card"><div class="feature-icon">📰</div><h3>Rockstar Newswire</h3><p>Read announcements, updates, and official Rockstar posts.</p><a class="btn" style="margin-top:14px" href="https://www.rockstargames.com/newswire" target="_blank" rel="noopener">OPEN NEWSWIRE ↗</a></article>
+      <article class="feature-card"><div class="feature-icon">🎮</div><h3>Rockstar Games</h3><p>Head to Rockstar's official website for its games and company news.</p><a class="btn" style="margin-top:14px" href="https://www.rockstargames.com/" target="_blank" rel="noopener">ROCKSTAR.COM ↗</a></article>
+    </div>
+    <footer class="footer"><strong>CHECK THE SOURCE</strong><br>External links open the official publisher pages.</footer>
+  </main>
+
+  <main id="galleryView" class="page" hidden>
+    <section class="extra-hero"><div class="kicker">VISUAL ARCHIVE / 2027</div><h1>AFTER DARK VISIONS.</h1><p>A stylized moodboard built into the site—neon horizons, midnight frequencies, and the next chapter of the city.</p></section>
+    <div class="gallery-grid"><div class="gallery-tile"><div><strong>VICE CITY / NEON HORIZON</strong><small>THE CITY NEVER SLEEPS</small></div></div><div class="gallery-tile"><div><strong>FM / FREQUENCIES</strong><small>TURN IT ALL THE WAY UP</small></div></div><div class="gallery-tile"><div><strong>LEONIDA / 2027</strong><small>THE NEXT CHAPTER</small></div></div></div>
+    <p class="music-note">Original CSS artwork and gradients. This is a fan-made visual moodboard, not official Rockstar game artwork.</p>
+    <footer class="footer"><strong>VICE CITY AFTER DARK / 2027</strong></footer>
+  </main>
+
+  <main id="sponsorsView" class="page" hidden>
+    <section class="extra-hero"><div class="sponsor-head"><div class="kicker">PARTNERS / NETWORK</div><div class="sponsor-count">10 FEATURED NAMES</div></div><h1>POWERED BY THE CULTURE.</h1><p>The platforms, creators, and services in the Vice City After Dark orbit. A dedicated space for the names behind music, games, tech, and community.</p></section>
+    <div class="section-heading"><div><div class="kicker">Sponsor directory</div><h2>Meet the lineup.</h2><p class="subtext">Ten featured brands in the sponsor showcase.</p></div><div class="clock">SPONSORS / 001—010</div></div>
+    <section class="sponsor-grid" aria-label="Sponsors">
+      <article class="sponsor-card"><div class="sponsor-logo">R*</div><strong>Rockstar Games</strong><span>Gaming</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">◉</div><strong>Spotify</strong><span>Music streaming</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">G</div><strong>Google</strong><span>Technology</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">●</div><strong>Apple</strong><span>Technology</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">S</div><strong>SuldSongs</strong><span>Music</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">♫</div><strong>Apple Music</strong><span>Music streaming</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">♪</div><strong>iTunes</strong><span>Digital media</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">▶</div><strong>YouTube</strong><span>Video platform</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">♪</div><strong>TikTok</strong><span>Social platform</span></article>
+      <article class="sponsor-card"><div class="sponsor-logo">⌁</div><strong>Discord</strong><span>Community</span></article>
+    </section>
+    <div class="sponsor-note">Brand names and logos are displayed for identification in this fan-made sponsor showcase. Their inclusion does not mean these companies sponsor, endorse, or are officially affiliated with this website.</div>
+    <footer class="footer"><strong>VICE CITY AFTER DARK / 2027</strong><br>PARTNER DIRECTORY</footer>
+  </main>
+
+  <main id="aboutView" class="page" hidden>
+    <section class="extra-hero"><div class="kicker">SYSTEM INFO / ABOUT</div><h1>BUILT FOR AFTER DARK.</h1><p>Vice City After Dark is a fan-made, responsive countdown and soundtrack experience. It brings countdowns, music, updates, and a neon-inspired interface together in one place.</p></section>
+    <div class="feature-grid"><article class="feature-card"><div class="feature-icon">⏱</div><h3>Live countdowns</h3><p>GTA VI, Christmas 2026, and New Year 2027 timers run using your device's local time.</p></article><article class="feature-card"><div class="feature-icon">🎧</div><h3>Local soundtrack</h3><p>The built-in player loads MP3 files stored beside index.html. Your audio files stay on your device or hosting account.</p></article><article class="feature-card"><div class="feature-icon">📱</div><h3>Every screen</h3><p>Responsive navigation and layouts adapt to desktop, tablet, and mobile screens.</p></article></div>
+    <div class="sponsor-note">VICE CITY AFTER DARK is an unofficial fan-made project and is not affiliated with, endorsed by, or sponsored by Rockstar Games or any brand listed on the Sponsors page.</div>
+    <footer class="footer"><strong>VICE CITY AFTER DARK / 2027</strong><br>END OF TRANSMISSION.</footer>
+  </main>
+</div>
+<script>
+// Dates are interpreted in the visitor's local timezone.
+const countdowns = {
+  gta: { target: new Date(2026, 10, 19, 0, 0, 0), start: new Date(2026, 10, 11, 0, 0, 0), complete: 'Launch day is here. Welcome to Leonida.' },
+  christmas: { target: new Date(2026, 11, 25, 0, 0, 0), start: new Date(2026, 10, 11, 0, 0, 0), complete: 'Merry Christmas! Enjoy the day.' },
+  newyear: { target: new Date(2027, 0, 1, 0, 0, 0), start: new Date(2026, 10, 11, 0, 0, 0), complete: 'Happy New Year 2027!' }
+};
+const pad = n => String(n).padStart(2, '0');
+const timerLabels = ['DAYS', 'HOURS', 'MINS', 'SECS'];
+const previousValues = {};
+function updateTimer(key, now) {
+  const config = countdowns[key];
+  const diff = Math.max(0, config.target - now);
+  const total = Math.floor(diff / 1000);
+  const values = diff <= 0 ? ['🎉', '00', '00', '00'] : [String(Math.floor(total / 86400)), pad(Math.floor(total % 86400 / 3600)), pad(Math.floor(total % 3600 / 60)), pad(total % 60)];
+  const host = document.getElementById('timer-' + key);
+  if (!host.dataset.ready) {
+    host.innerHTML = values.map((value, i) => `<div class="time-unit"><strong class="time-value">${value}</strong><small class="time-label">${timerLabels[i]}</small></div>`).join('');
+    host.dataset.ready = '1';
+    previousValues[key] = values.slice();
+  } else {
+    host.querySelectorAll('.time-value').forEach((node, i) => {
+      if (previousValues[key][i] !== values[i]) {
+        node.textContent = values[i];
+        node.classList.remove('changed');
+        void node.offsetWidth;
+        node.classList.add('changed');
+      }
+    });
+    previousValues[key] = values.slice();
+  }
+  const pct = diff <= 0 ? 100 : Math.max(0, Math.min(100, ((now - config.start) / (config.target - config.start)) * 100));
+  document.querySelector(`#progress-${key}`).style.width = pct + '%';
+  document.getElementById('status-' + key).textContent = diff <= 0 ? config.complete : key === 'gta' ? 'The road to Vice City is getting shorter.' : key === 'christmas' ? 'Holiday lights are getting closer.' : 'The next chapter is almost here.';
+}
+function tickClock() {
+  const now = new Date();
+  Object.keys(countdowns).forEach(key => updateTimer(key, now));
+  document.getElementById('localClock').textContent = 'LOCAL TIME · ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
+tickClock();
+setInterval(tickClock, 1000);
+
+const tracks = [
+  { title:'Shut up My Moms Calling', artist:'Hotel Ugly', file:'Track1.mp3' },
+  { title:'B2b', artist:'Artist TBA', file:'Track2.mp3' },
+  { title:'Pusher', artist:'Artist TBA', file:'Track3.mp3' },
+  { title:'Flower in a Hurricane', artist:'Justice, Tame Impala, SZA & King Gizzard and the Lizard Wizard', file:'Track4.mp3' },
+  { title:'Se me Nota', artist:'Artist TBA', file:'Track5.mp3', isNew:true },
+  { title:'Mine O Mine', artist:'Artist TBA', file:'Track6.mp3', isNew:true },
+  { title:'Inner Light', artist:'Artist TBA', file:'Track7.mp3', isNew:true },
+  { title:'Midnight City', artist:'M83', file:'Track8.mp3' },
+  { title:"That's It", artist:'Artist TBA', file:'Track9.mp3' },
+  { title:'POP', artist:'Artist TBA', file:'Track10.mp3' },
+  { title:'All The Stars (with SZA)', artist:'Kendrick Lamar & SZA', file:'Track11.mp3' },
+  { title:'telepatía', artist:'Kali Uchis', file:'Track12.mp3' },
+  { title:'want u', artist:'noevdv', file:'Track13.mp3' },
+  { title:'Blood In Your Eyes', artist:'Tove Lo', file:'Track14.mp3' },
+  { title:'Suzuki', artist:'Fuerza Regida', file:'Track15.mp3' },
+  { title:'RHYNO', artist:'Travis Scott', file:'Track16.mp3' },
+  { title:'Sexy Magic', artist:'PinkPantheress, CA7RIEL & Paco Amoroso, Fred again..', file:'Track17.mp3' },
+  { title:'Macacoa 2000', artist:'Rauw Alejandro', file:'Track18.mp3' },
+  { title:'Pound Town', artist:'Sexyy Red, Tay Keith', file:'Track19.mp3' },
+  { title:'Off The Grid', artist:'!!!, Meah Pace', file:'Track20.mp3' }
+];
+let current = 0;
+const audio = document.getElementById('audio');
+const trackGrid = document.getElementById('trackGrid');
+const playPause = document.getElementById('playPause');
+const playerError = document.getElementById('playerError');
+function renderTracks() {
+  trackGrid.innerHTML = tracks.map((track, index) => `<article class="track-card ${track.comingSoon?'soon':''} ${index===current?'active':''}" ${track.comingSoon?'':'data-playable="'+index+'"'} style="--card-glow:${index%3===0?'rgba(97,244,255,.16)':index%3===1?'rgba(168,139,255,.17)':'rgba(255,94,174,.14)'}">
+    <div class="track-top"><span class="track-number">TRACK ${String(index+1).padStart(2,'0')}</span>${track.comingSoon?'<span class="track-badge">COMING SOON</span>':track.isNew?'<span class="track-badge new">NEW!</span>':''}</div>
+    <div class="track-main"><h3 class="track-title">${track.title}</h3><p class="track-artist">${track.artist}</p></div>
+    <div class="track-bottom"><span class="track-file">${track.comingSoon?'NOT AVAILABLE YET':'OFFICIAL SOUNDTRACK'}</span><button class="track-play" type="button" data-track="${index}" ${track.comingSoon?'disabled':''} aria-label="${track.comingSoon?track.title+' coming soon':'Play '+track.title}">${track.comingSoon?'…':index===current&&!audio.paused?'Ⅱ':'▶'}</button></div>
+  </article>`).join('');
+  trackGrid.querySelectorAll('button[data-track]:not(:disabled)').forEach(button => button.addEventListener('click', () => loadTrack(Number(button.dataset.track), true)));
+}
+function playableIndex(start, direction=1) {
+  let index = (start + tracks.length) % tracks.length;
+  for (let count=0; count<tracks.length; count++) {
+    if (!tracks[index].comingSoon && tracks[index].file) return index;
+    index = (index + direction + tracks.length) % tracks.length;
+  }
+  return -1;
+}
+function loadTrack(index, autoplay=false, direction=1) {
+  const next = playableIndex(index, direction);
+  if (next < 0) return;
+  current = next;
+  audio.src = tracks[current].file;
+  document.getElementById('nowTitle').textContent = tracks[current].title;
+  document.getElementById('nowArtist').textContent = tracks[current].artist;
+  document.getElementById('seek').value = 0;
+  document.getElementById('elapsed').textContent = '0:00';
+  document.getElementById('duration').textContent = '0:00';
+  playerError.textContent = 'OFFICIAL TRACK PLAYER';
+  renderTracks();
+  if (autoplay) audio.play().then(() => { playPause.textContent='Ⅱ'; playPause.setAttribute('aria-label','Pause'); renderTracks(); }).catch(() => { playPause.textContent='▶'; playerError.textContent='Could not play this file. Check its filename and folder.'; });
+  else { playPause.textContent='▶'; playPause.setAttribute('aria-label','Play'); }
+}
+function togglePlay() {
+  if (audio.paused) audio.play().then(() => { playPause.textContent='Ⅱ'; playPause.setAttribute('aria-label','Pause'); renderTracks(); }).catch(() => { playerError.textContent='Could not play this file. Check its filename and folder.'; });
+  else { audio.pause(); playPause.textContent='▶'; playPause.setAttribute('aria-label','Play'); renderTracks(); }
+}
+function formatTime(seconds) { if (!Number.isFinite(seconds)) return '0:00'; return Math.floor(seconds/60)+':'+pad(Math.floor(seconds%60)); }
+playPause.addEventListener('click', togglePlay);
+document.getElementById('prevTrack').addEventListener('click', () => loadTrack(current-1, true, -1));
+document.getElementById('nextTrack').addEventListener('click', () => loadTrack(current+1, true, 1));
+audio.addEventListener('ended', () => loadTrack(current+1, true, 1));
+audio.addEventListener('play', () => { playPause.textContent='Ⅱ'; playPause.setAttribute('aria-label','Pause'); renderTracks(); });
+audio.addEventListener('pause', () => { playPause.textContent='▶'; playPause.setAttribute('aria-label','Play'); renderTracks(); });
+audio.addEventListener('error', () => { if (audio.src) playerError.textContent='Audio file not found. Check that the MP3 is beside index.html.'; });
+audio.addEventListener('timeupdate', () => {
+  const duration = audio.duration || 0;
+  document.getElementById('seek').value = duration ? audio.currentTime/duration*100 : 0;
+  document.getElementById('elapsed').textContent = formatTime(audio.currentTime);
+  document.getElementById('duration').textContent = formatTime(duration);
+});
+document.getElementById('seek').addEventListener('input', event => { if (audio.duration) audio.currentTime = audio.duration * Number(event.target.value)/100; });
+renderTracks();
+loadTrack(0, false);
+
+// Tab router: Home, Soundtrack + four new tabs and Sponsors.
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileToggle = document.getElementById('mobileToggle');
+const views = {home:'homeView',soundtrack:'soundtrackView',explore:'exploreView',news:'newsView',gallery:'galleryView',sponsors:'sponsorsView',about:'aboutView'};
+function setView(view) {
+  if (!views[view]) view = 'home';
+  Object.entries(views).forEach(([key,id]) => { document.getElementById(id).hidden = key !== view; });
+  document.querySelectorAll('[data-view-link]').forEach(button => button.classList.toggle('active', button.dataset.viewLink === view));
+  mobileMenu.classList.remove('open');
+  mobileToggle.setAttribute('aria-expanded','false');
+  mobileToggle.textContent = '☰';
+  window.scrollTo({top:0,behavior:'smooth'});
+  history.replaceState(null,'','#'+view);
+}
+document.querySelectorAll('[data-view-link]').forEach(button => button.addEventListener('click', () => setView(button.dataset.viewLink)));
+mobileToggle.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  mobileToggle.setAttribute('aria-expanded', String(open));
+  mobileToggle.textContent = open ? '✕' : '☰';
+});
+if (location.hash && views[location.hash.slice(1)]) setView(location.hash.slice(1));
+</script>
+</body>
+</html>
